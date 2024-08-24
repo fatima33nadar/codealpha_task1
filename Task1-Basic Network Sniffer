@@ -1,0 +1,70 @@
+from scapy.all import *
+
+def analyser(pkt):
+    if pkt.haslayer(TCP):
+        print("__________________________")
+        print("TCP packet ....")
+
+        src_ip = pkt[IP].src
+        dst_ip = pkt[IP].dst
+
+        mac_src = pkt.src
+        mac_dst = pkt.dst
+
+        src_port = pkt.sport
+        dst_port = pkt.dport
+
+        print("SRC-IP  : " + src_ip)
+        print("DST-IP  : " + dst_ip)
+        print("SRC-MAC : " + mac_src)
+        print("DST-MAC : " + mac_dst)
+        print("SRC-PORT: " + str(src_port))
+        print("DST-PORT: " + str(dst_port))
+        print("SIZE OF PACKET :" + str(len(pkt[TCP])))
+        if pkt.haslayer(Raw):
+            print(pkt[Raw].load)
+            print("------------------------------------")
+
+    if pkt.haslayer(UDP):
+        print("------------------------------------")
+        print("UDP packet ....")
+        src_ip = pkt[IP].src
+        dst_ip = pkt[IP].dst
+
+        mac_src = pkt.src
+        mac_dst = pkt.dst
+
+        src_port = pkt.sport
+        dst_port = pkt.dport
+
+        print("SRC-IP  : " + src_ip)
+        print("DST-IP  : " + dst_ip)
+        print("SRC-MAC : " + mac_src)
+        print("DST-MAC : " + mac_dst)
+        print("SRC-PORT: " + str(src_port))
+        print("DST-PORT: " + str(dst_port))
+        print("SIZE OF PACKET :" + str(len(pkt[UDP])))
+        if pkt.haslayer(Raw):
+            print(pkt[Raw].load)
+            print("------------------------------------")
+
+    if pkt.haslayer(ICMP):
+        print("------------------------------------")
+        print("ICMP packet ....")
+        src_ip = pkt[IP].src
+        dst_ip = pkt[IP].dst
+
+        mac_src = pkt.src
+        mac_dst = pkt.dst
+
+        print("SRC-IP  : " + src_ip)
+        print("DST-IP  : " + dst_ip)
+        print("SRC-MAC : " + mac_src)
+        print("DST-MAC : " + mac_dst)
+        print("SIZE OF PACKET :" + str(len(pkt[ICMP])))
+        if pkt.haslayer(Raw):
+            print(pkt[Raw].load)
+            print("------------------------------------")
+
+print("**************START*************************") 
+sniff(iface="eth0", prn=analyser)
